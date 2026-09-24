@@ -1,5 +1,7 @@
-FROM nginx
-MAINTAINER Aabhishek Wardhan
-LABEL this image is used to run a website on nginx
+FROM nginx:stable-alpine3.24-slim
 EXPOSE 80
-COPY index.html /usr/share/nginx/html
+RUN rm -rf /usr/share/nginx/html/*
+COPY index.html /usr/share/nginx/html/
+RUN chown -R nginx:nginx /usr/share/nginx/html
+USER nginx
+CMD ["nginx","-g","daemon off;"]
